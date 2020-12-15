@@ -67,5 +67,4 @@ workflows:
             - vulnerability-scan      
       - deploy-docker:
           requires:
-            - build-and-test
-            - vulnerability-scan
+            - hold-for-approval
