@@ -23,8 +23,27 @@ jobs:
           path: ~/test-results
       - store_artifacts:
           path: ~/test-results
+
+  deploy-docker:
+    docker:
+      - image: circleci/node:15.4
     
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run:
+          command: |
+            export TAG=0.1.<< pipeline.number >>
+            export IMAGE_NAME=$CIRCLE_PROJECT_REPONAME
+            export DOCKER_LOGIN=ceddlyburge
+            docker build -t $DOCKER_LOGIN/$IMAGE_NAME -t $DOCKER_LOGIN/$IMAGE_NAME:$TAG .
+# echo $DOCKER_PWD | docker login -u $DOCKER_LOGIN --password-stdin
+      
 workflows:
   cicd-demo:
     jobs:
       - build-and-test
+      - deploy-docker:
+          requires:
+            - build-and-test
