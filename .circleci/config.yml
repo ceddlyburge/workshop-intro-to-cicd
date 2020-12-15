@@ -60,6 +60,11 @@ workflows:
     jobs:
       - build-and-test
       - vulnerability-scan
+      - hold-for-approval:
+          type: approval
+          requires:
+            - build-and-test
+            - vulnerability-scan      
       - deploy-docker:
           requires:
             - build-and-test
