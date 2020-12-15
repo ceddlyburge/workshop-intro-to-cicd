@@ -38,7 +38,8 @@ jobs:
       - store_artifacts:
           path: reports
           destination: sast-scan-reports
-          deploy-docker:
+  
+  deploy-docker:
     docker:
       - image: circleci/node:15.4
     
