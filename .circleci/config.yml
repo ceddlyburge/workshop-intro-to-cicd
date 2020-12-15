@@ -59,6 +59,7 @@ workflows:
   cicd-demo:
     jobs:
       - build-and-test
+      - vulnerability-scan
       - deploy-docker:
           requires:
             - build-and-test
